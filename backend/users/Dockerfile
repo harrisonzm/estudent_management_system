@@ -1,35 +1,35 @@
-FROM node:18-alpine
+FROM node:18-alpine AS builder
 
-# Install Postgres
-RUN apk add --no-cache postgresql postgresql-contrib su-exec bash
+# Set working directory
+WORKDIR /app
 
-# Create Postgres data directory
-RUN mkdir -p /var/lib/postgresql/data
-
-# ENV variables (can be overridden by docker-compose)
-ENV POSTGRES_USER=postgres
-ENV POSTGRES_PASSWORD=postgres
-ENV POSTGRES_DB=usersDB
-
-WORKDIR /usr/src/app
-
-# Install Node dependencies
+# Install dependencies
 COPY package*.json ./
 RUN npm install
 
-# Copy the rest of the app
+# Copy source code
 COPY . .
 
-# Build the app
+# Build the NestJS application
 RUN npm run build
-# Custom entrypoint to launch both Postgres and NestJS
 
-COPY ./entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+# Use a smaller base image for the production environment
+FROM node:18-alpine AS production
 
+# Set working directory
+WORKDIR /app
+
+# Copy only necessary files from the builder stage
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/entrypoint.sh ./entrypoint.sh
+
+# Ensure the entrypoint script is executable
+RUN chmod +x ./entrypoint.sh
+
+# Expose application port
 EXPOSE 3000
-EXPOSE 5432
 
-
-CMD ["/entrypoint.sh"]
-
+# Set the entrypoint
+ENTRYPOINT ["./entrypoint.sh"]
