@@ -1,0 +1,33 @@
+services:
+  users-service:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/usersDB
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: usersDB
+      DB_PORT: 5432
+    volumes:
+      - .:/usr/src/app
+    command: ["sh", "entrypoint.sh"]
+
+  postgres:
+    image: postgres:15
+    restart: always
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/usersDB
+      POSTGRES_HOST: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      
+      POSTGRES_DB: usersDB
+      DB_PORT: 5432
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data

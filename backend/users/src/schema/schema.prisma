@@ -1,0 +1,33 @@
+// users microservice
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  nombres_apellidos       String
+  cedula                  String  @id
+  departamento_expedicion String
+  lugar_expedicion        String
+  genero                  String
+  etnia                   String
+  correo_personal         String  @unique
+  correo_institucional    String  @unique
+  telefono_movil          String
+  telefono_fijo           String?
+  updatedAt               DateTime @updatedAt
+  fecha_creacion DateTime @default(now())
+  contraseña    String
+  tipo          UserType
+}
+
+
+enum UserType {
+  estudiante
+  secretaria
+}
