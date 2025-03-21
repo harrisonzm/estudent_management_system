@@ -1,12 +1,14 @@
 import { Controller, Get, Post, Param, Body, Query } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { CoursesService } from './courses.service';
+import { UsersService } from './users/users.service';
+import { CoursesService } from './courses/courses.service';
+import { InscriptionsService } from './inscriptions/inscriptions.service';
 
 @Controller()
 export class AppController {
   constructor(
     private readonly usersService: UsersService,
     private readonly coursesService: CoursesService,
+    private readonly inscriptionService: InscriptionsService,
   ) {}
 
   // POST /user/student
@@ -29,18 +31,18 @@ export class AppController {
   // POST /course/inscription
   @Post('/course/inscription')
   createInscription(@Body() body: any) {
-    return this.coursesService.createInscription(body);
+    return this.inscriptionService.createInscription(body);
   }
 
   // GET /course/inscription/:id
   @Get('/course/inscription/:id')
   getInscriptionById(@Param('id') id: string) {
-    return this.coursesService.getInscriptionById(id);
+    return this.inscriptionService.getInscriptionById(id);
   }
 
   @Get('/course/inscription/?course')
   getInscriptionByCourse(@Query('course') course: string) {
-    return this.coursesService.getInscriptionByCourse(course);
+    return this.inscriptionService.getInscriptionByCourse(course);
   }
 
   // GET /course/:id
