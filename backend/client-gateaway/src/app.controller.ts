@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param, Body } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CoursesService } from './courses.service';
 
@@ -15,6 +15,11 @@ export class AppController {
     return this.usersService.createStudent(body);
   }
 
+  @Get('/users/student/')
+  getStudents() {
+    return this.usersService.getStudents();
+  }
+
   // GET /users/student/:id
   @Get('/users/student/:id')
   getStudent(@Param('id') id: string) {
@@ -29,13 +34,23 @@ export class AppController {
 
   // GET /course/inscription/:id
   @Get('/course/inscription/:id')
-  getInscription(@Param('id') id: string) {
+  getInscriptionById(@Param('id') id: string) {
     return this.coursesService.getInscriptionById(id);
+  }
+
+  @Get('/course/inscription/?course')
+  getInscriptionByCourse(@Query('course') course: string) {
+    return this.coursesService.getInscriptionByCourse(course);
   }
 
   // GET /course/:id
   @Get('/course/:id')
   getCourse(@Param('id') id: string) {
     return this.coursesService.getCourseById(id);
+  }
+
+  @Post('/course/')
+  postCourse(@Body() data: any) {
+    return this.coursesService.postCourse(data);
   }
 }
