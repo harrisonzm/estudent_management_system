@@ -29,7 +29,7 @@ export interface CreateUser {
   telefono_fijo?: string;
 }
 
-export interface UpdateteUser {
+export interface UpdateUser {
   nombres_apellidos?: string;
   cedula?: string;
   departamento_expedicion?: string;

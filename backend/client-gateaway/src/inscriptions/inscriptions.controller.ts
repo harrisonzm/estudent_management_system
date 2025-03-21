@@ -9,24 +9,25 @@ import {
   Inject,
   InternalServerErrorException,
   HttpException,
+  Query,
 } from '@nestjs/common';
-import { COURSES_SERVICE } from 'src/config';
+import { INSCRIPTION_SERVICE } from 'src/config';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
-import { CreateCourse, UpdateCourse } from './courses.types';
+import { Inscription, UpdateInscription } from './inscriptions.types';
 
-@Controller('courses')
-export class CoursesController {
+@Controller('/courses/inscriptions')
+export class InscriptionsController {
   constructor(
-    @Inject(COURSES_SERVICE) private readonly coursesClient: ClientProxy,
+    @Inject(INSCRIPTION_SERVICE)
+    private readonly inscriptionClient: ClientProxy,
   ) {}
-
   @Post()
-  async createCourse(@Body() createCourse: CreateCourse) {
-    console.log('🛠 Enviando datos:', createCourse);
+  async createInscription(@Body() inscription: Inscription) {
+    console.log('🛠 Enviando datos:', inscription);
     try {
-      return await firstValueFrom<CreateCourse>(
-        this.coursesClient.send({ cmd: 'createCourse' }, createCourse),
+      return await firstValueFrom<Inscription>(
+        this.inscriptionClient.send({ cmd: 'createStudent' }, inscription),
       );
     } catch (error: unknown) {
       if (error instanceof RpcException) {
@@ -53,29 +54,35 @@ export class CoursesController {
   }
 
   @Get()
-  findAllCourses() {
-    return this.coursesClient.send({ cmd: 'findCourses' }, {});
+  findInscriptionsByUser() {
+    return this.inscriptionClient.send({ cmd: 'findInscriptionByUser' }, {});
+  }
+
+  @Get()
+  findInscriptionsByCourse() {
+    return this.inscriptionClient.send({ cmd: 'findInscriptionByCourse' }, {});
   }
 
   @Get(':id')
-  findOneCourse(@Param('id') id: string) {
-    return this.coursesClient.send({ cmd: 'findOneCourse' }, { id });
+  findOneInscription(@Param('id') id: string) {
+    return this.inscriptionClient.send({ cmd: 'findOneInscription' }, { id });
   }
 
   @Patch(':id')
-  async updateCourse(
+  async updateInscription(
     @Param('id') id: string,
-    @Body() updateCourse: UpdateCourse,
+    @Query('course') course: string,
+    @Body() updateInscription: UpdateInscription,
   ) {
     try {
       console.log('ID en la URL:', id);
-      console.log('Datos recibidos:', updateCourse);
+      console.log('Datos recibidos:', updateInscription);
 
       // Sobrescribe el ID en el DTO
-      const updatedData = { ...updateCourse, id };
+      const updatedData = { ...updateInscription, id };
 
-      return await firstValueFrom<CreateCourse>(
-        this.coursesClient.send({ cmd: 'updateCourse' }, updatedData),
+      return await firstValueFrom<Inscription>(
+        this.inscriptionClient.send({ cmd: 'updateInscription' }, updatedData),
       );
     } catch (error: unknown) {
       if (error instanceof RpcException) {
@@ -101,7 +108,7 @@ export class CoursesController {
   }
 
   @Delete(':id')
-  removeCourse(@Param('id') id: string) {
-    return this.coursesClient.send({ cmd: 'deleteCourse' }, { id });
+  removeStudent(@Param('id') id: string) {
+    return this.inscriptionClient.send({ cmd: 'deleteStudent' }, { id });
   }
 }
