@@ -1,46 +1,18 @@
 import { Course } from 'src/courses/courses.types';
+import { PartialType } from '@nestjs/mapped-types';
+import { IsNotEmpty, IsString } from 'class-validator';
 
-export interface User {
-  nombres_apellidos: string;
-  cedula: string;
-  departamento_expedicion: string;
-  lugar_expedicion: string;
-  genero: string;
-  etnia: string;
-  correo_personal: string;
-  correo_institucional: string;
-  telefono_movil: string;
-  telefono_fijo: string;
-  fecha_creacion: Date;
-  fecha_actualizacion: Date;
-  type: 'student' | 'secretary';
+export class User {
+  id: string;
+  firstName: string;
+  lastName: string;
+  gender: string;
+  personalEmail: string;
+  institutionalEmail: string;
+  birthDate: Date;
+  nationality: string;
 }
-
-export interface CreateUser {
-  nombres_apellidos: string;
-  cedula: string;
-  departamento_expedicion: string;
-  lugar_expedicion: string;
-  genero: string;
-  etnia: string;
-  correo_personal: string;
-  correo_institucional: string;
-  telefono_movil: string;
-  telefono_fijo?: string;
-}
-
-export interface UpdateUser {
-  nombres_apellidos?: string;
-  cedula?: string;
-  departamento_expedicion?: string;
-  lugar_expedicion?: string;
-  genero?: string;
-  etnia?: string;
-  correo_personal?: string;
-  correo_institucional?: string;
-  telefono_movil?: string;
-  telefono_fijo?: string;
-}
+export class UpdateUser extends PartialType(User) {}
 
 export interface UserWithCourses {
   user: User;
