@@ -1,40 +1,41 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
+import { User, UserWithCourses } from './users.type';
 
 @Injectable()
 export class UsersService {
   constructor(private readonly httpService: HttpService) {}
 
-  createStudent(data: any) {
+  createStudent(data: any): User {
     try {
       // //return this.httpService
       //   .post('http://users-microservice:3001/user/student', data)
       //   .toPromise();
-      return `creado ${data}`;
+      return {} as User;
     } catch (err) {
-      return null;
+      return {} as User;
     }
   }
 
-  getStudents() {
+  getStudents(): User[] {
     try {
       // return this.httpService
       //   .get(`http://users-microservice:3001/users/student/${id}`)
       //   .toPromise();
-      return ` obtenidos`;
+      return [{}, {}] as User[];
     } catch (err) {
-      return null;
+      return [];
     }
   }
 
-  getStudentById(id: string) {
+  getStudentById(id: string): User {
     try {
       // return this.httpService
       //   .get(`http://users-microservice:3001/users/student/${id}`)
       //   .toPromise();
-      return ` obtenido ${id}`;
+      return {} as User;
     } catch (err) {
-      return null;
+      return {} as User;
     }
   }
 }

@@ -2,6 +2,7 @@ import { Controller, Get, Post, Param, Body, Query } from '@nestjs/common';
 import { UsersService } from './users/users.service';
 import { CoursesService } from './courses/courses.service';
 import { InscriptionsService } from './inscriptions/inscriptions.service';
+import { CreateUser, User, UserWithCourses } from './users/users.type';
 
 @Controller()
 export class AppController {
@@ -13,18 +14,18 @@ export class AppController {
 
   // POST /user/student
   @Post('/users/student')
-  createStudent(@Body() body: any) {
+  createStudent(@Body() body: CreateUser): User {
     return this.usersService.createStudent(body);
   }
 
   @Get('/users/students/')
-  getStudents() {
+  getStudents(): User[] {
     return this.usersService.getStudents();
   }
 
   // GET /users/student/:id
   @Get('/users/students/:id')
-  getStudent(@Param('id') id: string) {
+  getStudent(@Param('id') id: string): User {
     return this.usersService.getStudentById(id);
   }
 
