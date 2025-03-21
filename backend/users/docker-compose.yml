@@ -1,32 +1,40 @@
-version: '3.8'
-
 services:
   users-service:
     build: .
     container_name: microservice
     ports:
-      - "3000:3000"
+      - "3001:3001"
     depends_on:
-      - postgres
+      - postgres-users
     environment:
-      DATABASE_URL: postgres://postgres:postgres@postgres:5432/usersDB
-      POSTGRES_HOST: postgres
+      PORT: 3001
+      DATABASE_URL: postgresql://postgres:postgres@postgres-users:5432/usersDB?schema=public
+      POSTGRES_HOST: postgres-users
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: usersDB
       DB_PORT: 5432
-    volumes:
-      - .:/app
     command: ["./entrypoint.sh"]
+    networks:
+      - backend-network
 
-  postgres:
+  postgres-users:
     image: postgres:15
     restart: always
     environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres-users:5432/usersDB?schema=public
+      POSTGRES_HOST: postgres-users
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: usersDB
+      DB_PORT: 5432
     ports:
       - "5432:5432"
     volumes:
-      - ./data:/var/lib/postgresql/data
+      - ./pgdata_users:/var/lib/postgresql/data
+    networks:
+      - backend-network
+
+networks:
+  backend-network:
+    driver: bridge

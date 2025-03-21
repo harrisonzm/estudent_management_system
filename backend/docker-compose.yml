@@ -1,0 +1,66 @@
+services:
+  gateaway:
+    build: ./client-gateaway
+    container_name: client-gateaway
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres-db:5432/mydatabase
+    networks:
+      - backend-network
+
+  users-ms:
+    build: ./users
+    container_name: users-microservice
+    ports:
+      - "3001:3001"
+    depends_on:
+      - postgres-users
+    environment:
+      PORT: 3001
+      DATABASE_URL: postgres://postgres:postgres@postgres-users:5432/users
+    command: ["./entrypoint.sh"]
+    networks:
+      - backend-network
+
+  postgres-users:
+    image: postgres:15
+    container_name: postgres-users
+    restart: always
+    environment:
+      - POSTGRES_DB=users
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - pgdata_users:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - backend-network
+
+  postgres:
+    image: postgres:15  
+    container_name: postgres-db
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: mydatabase
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend-network
+
+volumes:
+  postgres_data:
+    name: postgres_data
+  pgdata_users:
+    name: pgdata_users
+
+networks:
+  backend-network:
+    driver: bridge
