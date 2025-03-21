@@ -10,7 +10,7 @@ import {
   InternalServerErrorException,
   HttpException,
 } from '@nestjs/common';
-import { COURSES_SERVICE } from 'src/config';
+import { COURSES_SERVICE } from '../config/services';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 import { CreateCourse, UpdateCourse } from './courses.types';

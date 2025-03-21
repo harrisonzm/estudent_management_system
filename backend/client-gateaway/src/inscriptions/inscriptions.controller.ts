@@ -11,7 +11,7 @@ import {
   HttpException,
   Query,
 } from '@nestjs/common';
-import { INSCRIPTION_SERVICE } from 'src/config';
+import { INSCRIPTION_SERVICE } from '../config/services';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
 import { Inscription, UpdateInscription } from './inscriptions.types';
