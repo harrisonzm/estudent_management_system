@@ -23,8 +23,11 @@
     "@nestjs/axios": "^4.0.0",
     "@nestjs/common": "^11.0.1",
     "@nestjs/core": "^11.0.1",
+    "@nestjs/microservices": "^11.0.12",
     "@nestjs/platform-express": "^11.0.1",
     "client-gateaway": "file:",
+    "dotenv": "^16.4.7",
+    "joi": "^17.13.3",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1"
   },
