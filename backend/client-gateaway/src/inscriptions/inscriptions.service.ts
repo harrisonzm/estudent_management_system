@@ -1,8 +1,9 @@
-import { Injectable, HttpServer } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { HttpService } from '@nestjs/axios';
 
 @Injectable()
 export class InscriptionsService {
-  constructor(private readonly httpService: HttpServer) {}
+  constructor(private readonly httpService: HttpService) {}
   createInscription(data: any) {
     return `inscrip ${data}`; //this.httpService.post('http://courses-microservice:3003/course/inscription', data).toPromise();
   }

@@ -12,46 +12,46 @@ export class AppController {
   ) {}
 
   // POST /user/student
-  @Post('/user/student')
+  @Post('/users/student')
   createStudent(@Body() body: any) {
     return this.usersService.createStudent(body);
   }
 
-  @Get('/users/student/')
+  @Get('/users/students/')
   getStudents() {
     return this.usersService.getStudents();
   }
 
   // GET /users/student/:id
-  @Get('/users/student/:id')
+  @Get('/users/students/:id')
   getStudent(@Param('id') id: string) {
     return this.usersService.getStudentById(id);
   }
 
   // POST /course/inscription
-  @Post('/course/inscription')
+  @Post('/courses/inscriptions')
   createInscription(@Body() body: any) {
     return this.inscriptionService.createInscription(body);
   }
 
   // GET /course/inscription/:id
-  @Get('/course/inscription/:id')
+  @Get('/courses/inscriptions/:id')
   getInscriptionById(@Param('id') id: string) {
     return this.inscriptionService.getInscriptionById(id);
   }
 
-  @Get('/course/inscription/?course')
+  @Get('/courses/inscriptions/')
   getInscriptionByCourse(@Query('course') course: string) {
     return this.inscriptionService.getInscriptionByCourse(course);
   }
 
   // GET /course/:id
-  @Get('/course/:id')
+  @Get('/courses/:id')
   getCourse(@Param('id') id: string) {
     return this.coursesService.getCourseById(id);
   }
 
-  @Post('/course/')
+  @Post('/courses/')
   postCourse(@Body() data: any) {
     return this.coursesService.postCourse(data);
   }

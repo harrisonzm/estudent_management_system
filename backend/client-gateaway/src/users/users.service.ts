@@ -1,8 +1,9 @@
-import { Injectable, HttpServer } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { HttpService } from '@nestjs/axios';
 
 @Injectable()
 export class UsersService {
-  constructor(private readonly httpService: HttpServer) {}
+  constructor(private readonly httpService: HttpService) {}
 
   createStudent(data: any) {
     try {
