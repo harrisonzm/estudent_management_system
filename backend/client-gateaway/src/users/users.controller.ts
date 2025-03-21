@@ -10,10 +10,10 @@ import {
   InternalServerErrorException,
   HttpException,
 } from '@nestjs/common';
-import { USERS_SERVICE } from 'src/config';
+import { USERS_SERVICE } from '../config/services';
 import { ClientProxy, RpcException } from '@nestjs/microservices';
 import { firstValueFrom } from 'rxjs';
-import { CreateUser, UpdateUser } from './users.types';
+import { User, UpdateUser } from './users.types';
 @Controller('users/student')
 export class UsersController {
   constructor(
@@ -21,11 +21,11 @@ export class UsersController {
   ) {}
 
   @Post()
-  async createStudent(@Body() createUser: CreateUser) {
-    console.log('🛠 Enviando datos:', createUser);
+  async createStudent(@Body() User: User) {
+    console.log('🛠 Enviando datos:', User);
     try {
-      return await firstValueFrom<CreateUser>(
-        this.userClient.send({ cmd: 'createStudent' }, createUser),
+      return await firstValueFrom<User>(
+        this.userClient.send({ cmd: 'createStudent' }, User),
       );
     } catch (error: unknown) {
       if (error instanceof RpcException) {
@@ -70,7 +70,7 @@ export class UsersController {
       // Sobrescribe el ID en el DTO
       const updatedData = { ...updateUser, id };
 
-      return await firstValueFrom<CreateUser>(
+      return await firstValueFrom<User>(
         this.userClient.send({ cmd: 'updateStudent' }, updatedData),
       );
     } catch (error: unknown) {
