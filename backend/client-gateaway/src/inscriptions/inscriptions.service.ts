@@ -1,18 +1,83 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
+import { Inscription, UpdateInscription } from './inscriptions.types';
 
 @Injectable()
 export class InscriptionsService {
   constructor(private readonly httpService: HttpService) {}
-  createInscription(data: any) {
-    return `inscrip ${data}`; //this.httpService.post('http://courses-microservice:3003/course/inscription', data).toPromise();
+  createInscription(data: Inscription): Inscription {
+    try {
+      // //return this.httpService
+      //   .post('http://users-microservice:3001/user/student', data)
+      //   .toPromise();
+      return {} as Inscription;
+    } catch (err) {
+      return {} as Inscription;
+    }
   }
 
-  getInscriptionById(id: string) {
-    return `obtener incripción  del estudiante ${id}`; //this.httpService.get(`http://courses-microservice:3003/course/inscription/${id}`).toPromise();
+  createManyInscriptions(data: Inscription[]): Inscription {
+    try {
+      // //return this.httpService
+      //   .post('http://users-microservice:3001/user/student', data)
+      //   .toPromise();
+      return {} as Inscription;
+    } catch (err) {
+      return {} as Inscription;
+    }
   }
 
-  getInscriptionByCourse(course: string) {
-    return `obtener incripciones del curso ${course}`; //this.httpService.get(`http://courses-microservice:3003/course/inscription/?course=${course}`).toPromise();
+  getInscriptions(): Inscription[] {
+    try {
+      // return this.httpService
+      //   .get(`http://users-microservice:3001/users/student/${id}`)
+      //   .toPromise();
+      return [{}, {}] as Inscription[];
+    } catch (err) {
+      return [];
+    }
+  }
+
+  updateInscription(id: string, data: UpdateInscription): Inscription {
+    try {
+      // return this.httpService
+      //   .get(`http://users-microservice:3001/users/student/${id}`)
+      //   .toPromise();
+      return {} as Inscription;
+    } catch (err) {
+      return {} as Inscription;
+    }
+  }
+
+  getInscriptionById(id: string): Inscription {
+    try {
+      // return this.httpService
+      //   .get(`http://users-microservice:3001/users/student/${id}`)
+      //   .toPromise();
+      return {} as Inscription;
+    } catch (err) {
+      return {} as Inscription;
+    }
+  }
+
+  deleteInscriptionById(id: string): Inscription {
+    try {
+      // return this.httpService
+      //   .get(`http://users-microservice:3001/users/student/${id}`)
+      //   .toPromise();
+      return {} as Inscription;
+    } catch (err) {
+      return {} as Inscription;
+    }
+  }
+  deleteManyInscriptionsById(data: string[]): Inscription[] {
+    try {
+      // return this.httpService
+      //   .get(`http://users-microservice:3001/users/student/${id}`)
+      //   .toPromise();
+      return [{}, {}] as Inscription[];
+    } catch (err) {
+      return [] as Inscription[];
+    }
   }
 }
