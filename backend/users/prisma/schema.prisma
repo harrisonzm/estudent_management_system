@@ -26,7 +26,6 @@ model Users {
   telefono_fijo           String  @unique
   updatedAt               DateTime @updatedAt
   fecha_creacion DateTime @default(now())
-  contraseña    String
   tipo          UserType
 }
 
