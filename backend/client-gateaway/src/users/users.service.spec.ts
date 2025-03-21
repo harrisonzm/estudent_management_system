@@ -2,12 +2,14 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UsersService } from './users.service';
 import { User, CreateUser, UserWithCourses } from './users.types'; // Ajusta la ruta según tu proyecto
 import { Course } from 'src/courses/courses.types';
+import { HttpModule } from '@nestjs/axios';
 
 describe('UsersService', () => {
   let service: UsersService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
+      imports: [HttpModule],
       providers: [UsersService],
     }).compile();
 
