@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
-import { User, UserWithCourses } from './users.type';
+import { User, UserWithCourses } from './users.types';
 
 @Injectable()
 export class UsersService {

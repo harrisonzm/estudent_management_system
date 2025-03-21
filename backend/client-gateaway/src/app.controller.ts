@@ -2,7 +2,7 @@ import { Controller, Get, Post, Param, Body, Query } from '@nestjs/common';
 import { UsersService } from './users/users.service';
 import { CoursesService } from './courses/courses.service';
 import { InscriptionsService } from './inscriptions/inscriptions.service';
-import { CreateUser, User, UserWithCourses } from './users/users.type';
+import { CreateUser, User, UserWithCourses } from './users/users.types';
 
 @Controller()
 export class AppController {
@@ -55,5 +55,8 @@ export class AppController {
   @Post('/courses/')
   postCourse(@Body() data: any) {
     return this.coursesService.postCourse(data);
+  }
+  getHello(): string {
+    return 'Hello World!';
   }
 }
